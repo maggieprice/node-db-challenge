@@ -1,117 +1,81 @@
 const express = require('express');
 
-const Projects = require('./projects/project-model.js');
+const Projects = require('./project-model.js');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  Schemes.find()
-  .then(schemes => {
-    res.json(schemes);
+  Projects.find()
+  .then(projects => {
+    res.json(projects);
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get schemes' });
+    res.status(500).json({ message: 'Failed to get projects' });
   });
 });
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  Schemes.findById(id)
-  .then(scheme => {
-    if (scheme) {
-      res.json(scheme);
+  Projects.findById(id)
+  .then(project => {
+    if (project) {
+      res.json(project);
     } else {
-      res.status(404).json({ message: 'Could not find scheme with given id.' })
+      res.status(404).json({ message: 'Could not find project with given id.' })
     }
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get schemes' });
-  });
-});
-
-router.get('/:id/steps', (req, res) => {
-  const { id } = req.params;
-
-  Schemes.findSteps(id)
-  .then(steps => {
-    if (steps.length) {
-      res.json(steps);
-    } else {
-      res.status(404).json({ message: 'Could not find steps for given scheme' })
-    }
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to get steps' });
+    res.status(500).json({ message: 'Failed to get Projects' });
   });
 });
 
 router.post('/', (req, res) => {
-  const schemeData = req.body;
+  const projectData = req.body;
 
-  Schemes.add(schemeData)
-  .then(scheme => {
-    res.status(201).json(scheme);
+  Projects.add(projectData)
+  .then(project => {
+    res.status(201).json(project);
   })
   .catch (err => {
-    res.status(500).json({ message: 'Failed to create new scheme' });
-  });
-});
-
-router.post('/:id/steps', (req, res) => {
-  const stepData = req.body;
-  const { id } = req.params; 
-
-  Schemes.findById(id)
-  .then(scheme => {
-    if (scheme) {
-      Schemes.addStep(stepData, id)
-      .then(step => {
-        res.status(201).json(step);
-      })
-    } else {
-      res.status(404).json({ message: 'Could not find scheme with given id.' })
-    }
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to create new step' });
-  });
-});
-
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const changes = req.body;
-
-  Schemes.findById(id)
-  .then(scheme => {
-    if (scheme) {
-      Schemes.update(changes, id)
-      .then(updatedScheme => {
-        res.json(updatedScheme);
-      });
-    } else {
-      res.status(404).json({ message: 'Could not find scheme with given id' });
-    }
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to update scheme' });
-  });
-});
-
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-
-  Schemes.remove(id)
-  .then(deleted => {
-    if (deleted) {
-      res.json({ removed: deleted });
-    } else {
-      res.status(404).json({ message: 'Could not find scheme with given id' });
-    }
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to delete scheme' });
+    res.status(500).json({ message: 'Failed to create new project' });
   });
 });
 
 module.exports = router;
+
+// router.get('/:id/steps', (req, res) => {
+//     const { id } = req.params;
+  
+//     Projects.findTasks(id)
+//     .then(steps => {
+//       if (steps.length) {
+//         res.json(steps);
+//       } else {
+//         res.status(404).json({ message: 'Could not find steps for given project' })
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).json({ message: 'Failed to get steps' });
+//     });
+//   });
+
+// router.post('/:id/steps', (req, res) => {
+//   const stepData = req.body;
+//   const { id } = req.params; 
+
+//   Projects.findById(id)
+//   .then(project => {
+//     if (project) {
+//       Projects.addStep(stepData, id)
+//       .then(step => {
+//         res.status(201).json(step);
+//       })
+//     } else {
+//       res.status(404).json({ message: 'Could not find project with given id.' })
+//     }
+//   })
+//   .catch (err => {
+//     res.status(500).json({ message: 'Failed to create new step' });
+//   });
+// });

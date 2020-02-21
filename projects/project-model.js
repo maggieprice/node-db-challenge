@@ -1,4 +1,4 @@
-const db = require("../data/db-config.js");
+const db = require("../data/.db-config.js");
 
 module.exports = {
   find,
@@ -24,7 +24,7 @@ function findById(id) {
 function findTasks(id) {
     return db("tasks")
       .join("projects", "project.id", "tasks.project_id")
-      .select("tasks.id", "projects.project_name", "tasks.description", "tasks.notes", "tasks.completed")
+      .select("tasks.id", "projects.project_name", "projects.description", "tasks.description", "tasks.notes", "tasks.completed")
       .where("project_id", id);
   }  
 
