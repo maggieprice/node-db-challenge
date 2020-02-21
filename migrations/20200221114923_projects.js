@@ -26,6 +26,7 @@ exports.up = function(knex) {
         tasks.integer('project_id')
         .unsigned()
         .references('projects.id');
+        
     })
   
 };

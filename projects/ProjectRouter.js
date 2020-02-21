@@ -45,32 +45,5 @@ router.post('/', (req, res) => {
 });
 
 
-// resource endpoints
-
-router.get('/resources', (req, res) => {
-    Projects.findResources()
-    .then(resources => {
-        res.json(resources);
-      })
-      .catch(err => {
-        res.status(500).json({ message: 'Failed to get resources' });
-      });
-  });
-
-  router.post('/resources', (req, res) => {
-    const resourceData = req.body;
-  
-    Projects.addResource(resourceData)
-    .then(resource => {
-      res.status(200).json(resource);
-    })
-    .catch (err => {
-      res.status(500).json({ message: 'Failed to create new resource' });
-    });
-  });
-
-
-
-
 module.exports = router;
 
