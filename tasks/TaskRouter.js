@@ -7,14 +7,16 @@ const router = express.Router();
 
 // task endoints
 router.get('/', (req, res) => {
-  Tasks.findTasks()
-  .then(tasks => {
-    res.json(tasks);
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to get tasks' });
+   
+    Tasks.findTasks()
+    .then(tasks => {
+        res.json(tasks);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get tasks' });
+    });
   });
-});
+  
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;

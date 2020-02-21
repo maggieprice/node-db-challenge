@@ -14,12 +14,10 @@ function findById(id) {
 
 function findTasks() {
     return db("tasks")
-      .join("projects", "projects.id", "tasks.project_id")
-      .select("tasks.id", "projects.project_name", "projects.description", "tasks.task_description", "tasks.notes", "tasks.completed as task_completed")
-   
+      .join("projects", "tasks.project_id",  "projects.id")
+      .select('*')
   }  
 
- 
 function addTask(task) {
     return db("tasks").insert(task, "id");
   }
