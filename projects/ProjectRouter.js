@@ -4,6 +4,8 @@ const Projects = require('./project-model.js');
 
 const router = express.Router();
 
+
+// project endoints
 router.get('/', (req, res) => {
   Projects.find()
   .then(projects => {
@@ -42,40 +44,33 @@ router.post('/', (req, res) => {
   });
 });
 
+
+// resource endpoints
+
+router.get('/resources', (req, res) => {
+    Projects.findResources()
+    .then(resources => {
+        res.json(resources);
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'Failed to get resources' });
+      });
+  });
+
+  router.post('/resources', (req, res) => {
+    const resourceData = req.body;
+  
+    Projects.addResource(resourceData)
+    .then(resource => {
+      res.status(200).json(resource);
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to create new resource' });
+    });
+  });
+
+
+
+
 module.exports = router;
 
-// router.get('/:id/steps', (req, res) => {
-//     const { id } = req.params;
-  
-//     Projects.findTasks(id)
-//     .then(steps => {
-//       if (steps.length) {
-//         res.json(steps);
-//       } else {
-//         res.status(404).json({ message: 'Could not find steps for given project' })
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).json({ message: 'Failed to get steps' });
-//     });
-//   });
-
-// router.post('/:id/steps', (req, res) => {
-//   const stepData = req.body;
-//   const { id } = req.params; 
-
-//   Projects.findById(id)
-//   .then(project => {
-//     if (project) {
-//       Projects.addStep(stepData, id)
-//       .then(step => {
-//         res.status(201).json(step);
-//       })
-//     } else {
-//       res.status(404).json({ message: 'Could not find project with given id.' })
-//     }
-//   })
-//   .catch (err => {
-//     res.status(500).json({ message: 'Failed to create new step' });
-//   });
-// });

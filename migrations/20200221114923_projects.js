@@ -2,32 +2,30 @@
 exports.up = function(knex) {
     return knex.schema
     .createTable('projects', projects => {
-        projects.incrememnts()
+        projects.increments();
         projects.string('project_name', 255)
-                .notnullable()
-        projects.string('description', 1024)
+                .notNullable();
+        projects.string('description', 1024);
         projects.boolean('completed')
-                .notnullable()
+                .notNullable();
     })
     .createTable('resources', resources => {
-        resources.incrememnts()
+        resources.increments();
         resources.string('name', 128)
-                .notnullable()
-        resources.string('description', 1024)
-        resources.integer('project_id')
-            .unsigned()
-            .references('projects.id')
+                .notNullable();
+        resources.string('resource_description', 1024);
+
     })
     .createTable('tasks', tasks => {
-        tasks.incrememnts()
-        tasks.string('description', 1024)
+        tasks.increments();
+        tasks.string('task_description', 1024);
         tasks.string('notes')
-             .notnullable()
+             .notNullable();
         tasks.boolean('completed')
-             .notnullable()
+             .notNullable();
         tasks.integer('project_id')
         .unsigned()
-        .references('projects.id')
+        .references('projects.id');
     })
   
 };

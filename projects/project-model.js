@@ -8,7 +8,6 @@ module.exports = {
   add,
   addTask,
   addResource
-  
 };
 
 function find() {
